@@ -1,0 +1,43 @@
+dist: trusty
+os: linux
+language: node_js
+node_js:
+  - "8"
+cache:
+directories:
+  - "node_modules"
+before_install:
+  - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
+  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+  - echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
+  - sudo apt-get update
+  - sudo apt-get install --no-install-recommends -y mono-devel ca-certificates-mono wine1.8 gcc-multilib g++-multilib
+script: 
+  - npm install -g bower
+  - npm update -g npm
+  - bower install
+  - npm run package-linux
+  - npm run package-mac
+  - npm run package-windows
+before_deploy:
+  - cd build
+  - bash ../script/zip.sh
+  - export RELEASE_PKG_FILE=$(ls *.zip)
+  - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
+deploy:
+  - provider: releases
+    api_key:
+      secure: SkbD2RDHcghw8jtBVjQyboO7lmnPyFz8CLnu8ka5c1H7lPj0pkqiJc59eJU8q/EHo7GbVZNuDcs22lWl1QATYBoQLXSt7r8zhCU2cgW5s//ItiiqXjswcTqWKeZ3Z4/UxKC6lw6sTfTF5ExN7Cm/eAvZe7ngEW+U971oCGNM7OCKYZG55PR5dMYcamXWtS5Ppn8J43pHCdlbV7AE42aa0w30nP3TSnj3N76vgYFxpSZ8SrXd3xg3dNlLozNisKyxK0RjGxDSBDg5fxm+vxxej34mZzRgMRpn9jWJNTo0tKkL4kNmdIV198cw9WvbutFYt0vMHcU8Bk/1ERXT0qIo7Ku7cNvTfXNfi7SOkuOKiSqUrbwKo05AHoPGjNTAB+kzrGsaiVRyymGjG9N3GaTAZNuvtDvLwo0VsTPdM5ZnIYHVJziNsboSrfGFoInNiptBrjUUPa1MY2ClsTTLzZRUzy1B7ZjHLVi/MHKTW45ATjNxlC+vJPSUEIeUPV4AXFoIifjijhc8tghqCMKsBswwBy4UbHntoAuc7DI2tURrx4suXj3Y4Dacncnnzi5wtEvPopCNb668YNGxo6sZ6EvjLDSTox3gBxu1/OMI1CLsIQjeEpQjJiEq5Ryrk/BDiE74+yL4weDKpVdk1RKKoxhrirwqxlpj1mVCi09WoOfdbyE=
+    skip_cleanup: true
+    file_glob: true
+    file: "*.zip"
+    on:
+      branch: master
+  - provider: releases
+    api_key:
+      secure: SkbD2RDHcghw8jtBVjQyboO7lmnPyFz8CLnu8ka5c1H7lPj0pkqiJc59eJU8q/EHo7GbVZNuDcs22lWl1QATYBoQLXSt7r8zhCU2cgW5s//ItiiqXjswcTqWKeZ3Z4/UxKC6lw6sTfTF5ExN7Cm/eAvZe7ngEW+U971oCGNM7OCKYZG55PR5dMYcamXWtS5Ppn8J43pHCdlbV7AE42aa0w30nP3TSnj3N76vgYFxpSZ8SrXd3xg3dNlLozNisKyxK0RjGxDSBDg5fxm+vxxej34mZzRgMRpn9jWJNTo0tKkL4kNmdIV198cw9WvbutFYt0vMHcU8Bk/1ERXT0qIo7Ku7cNvTfXNfi7SOkuOKiSqUrbwKo05AHoPGjNTAB+kzrGsaiVRyymGjG9N3GaTAZNuvtDvLwo0VsTPdM5ZnIYHVJziNsboSrfGFoInNiptBrjUUPa1MY2ClsTTLzZRUzy1B7ZjHLVi/MHKTW45ATjNxlC+vJPSUEIeUPV4AXFoIifjijhc8tghqCMKsBswwBy4UbHntoAuc7DI2tURrx4suXj3Y4Dacncnnzi5wtEvPopCNb668YNGxo6sZ6EvjLDSTox3gBxu1/OMI1CLsIQjeEpQjJiEq5Ryrk/BDiE74+yL4weDKpVdk1RKKoxhrirwqxlpj1mVCi09WoOfdbyE=
+    skip_cleanup: true
+    file_glob: true
+    file: "*.zip"
+    on:
+      tags: true
