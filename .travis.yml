@@ -26,20 +26,12 @@ before_deploy:
 - export RELEASE_PKG_FILE=$(ls *.zip)
 - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
 deploy:
-  matrix:
-  - provider: releases
-    api_key:
-      secure: NY3LtAByHd+f/2mv/S4QnO1NaVbYNasmpveu5a8NfPY0EXuWmjfeoW//h9Q9J3CDgRl8aHl4uCzy+eWrxCZY4zsP4h9G3YSqk6+Lugv7c7qWZQvxQv6BVp9vO5Kp88XerWRRfplucBdU3mNzhG9dKIqoxaDHI0BGHDLn7xm8XKsOkQpt+T7rZbJ0s8hCtDMwa5qOoQN379Gw1wp6EbAa0+YTqpPJy3nE51xXQq/EyxI3do+UALbXEZM7eErgsjWCPVx5jyQ/7uuRVVnvz2kN5cVG+Kp7bsZrUs2EKE4IQY+XFudLhRrHtUwddtTqoCyjcn/VNvmtcxwdIcGc7su7JI87/t7YfPqZ+fLhcumenq74CV5W1N2Uf8Ooji4hou9C81gwwcTNAP1Us7/Vxax20duB2tkRaTX1IzDVWwux47K/BQ6/DUGXS0X+zaB2nPULx5iseBJvRFG2qCZdCxSpIBIsJU4A8aQzoOye6P6L9bDc79/OfeVVxiGk3QmSbVM8oN2JQafZ+UZROdp6R9H2Z4nAsrWdL4kx3trEzhWQ3jXKhXbclgz1Qc54du1E4sQWDNX3OYK2JUHusg5CD2gwroaAQIlcV97xLiKXFxpo7ix9y0n7Poeide4584udPVFBfd0eRccrx0HdUuDt0YdIIT84jBSyLJ3b6crcTX+SzBk=
-    skip_cleanup: true
-    file_glob: true
-    file: '*.zip'
-    on:
-      branch: master
-  - provider: releases
-    api_key:
-      secure: NY3LtAByHd+f/2mv/S4QnO1NaVbYNasmpveu5a8NfPY0EXuWmjfeoW//h9Q9J3CDgRl8aHl4uCzy+eWrxCZY4zsP4h9G3YSqk6+Lugv7c7qWZQvxQv6BVp9vO5Kp88XerWRRfplucBdU3mNzhG9dKIqoxaDHI0BGHDLn7xm8XKsOkQpt+T7rZbJ0s8hCtDMwa5qOoQN379Gw1wp6EbAa0+YTqpPJy3nE51xXQq/EyxI3do+UALbXEZM7eErgsjWCPVx5jyQ/7uuRVVnvz2kN5cVG+Kp7bsZrUs2EKE4IQY+XFudLhRrHtUwddtTqoCyjcn/VNvmtcxwdIcGc7su7JI87/t7YfPqZ+fLhcumenq74CV5W1N2Uf8Ooji4hou9C81gwwcTNAP1Us7/Vxax20duB2tkRaTX1IzDVWwux47K/BQ6/DUGXS0X+zaB2nPULx5iseBJvRFG2qCZdCxSpIBIsJU4A8aQzoOye6P6L9bDc79/OfeVVxiGk3QmSbVM8oN2JQafZ+UZROdp6R9H2Z4nAsrWdL4kx3trEzhWQ3jXKhXbclgz1Qc54du1E4sQWDNX3OYK2JUHusg5CD2gwroaAQIlcV97xLiKXFxpo7ix9y0n7Poeide4584udPVFBfd0eRccrx0HdUuDt0YdIIT84jBSyLJ3b6crcTX+SzBk=
-    skip_cleanup: true
-    file_glob: true
-    file: '*.zip'
-    on:
-      tags: true
+  provider: releases
+  api_key:
+    secure: S4zswtPak7Batiq3vKxHiI/9354JAraTUqb0EpbGTojxxA3uPw1fOwa2GcmCQgSDhhxTVcpDEoexgi07jvFS32nlO8mBvco3tBkSqc4/LAKCafXXj8XX0FRQDE5u715FyWAvQN9UyTbKRiHUBrA7D/0nwQ5JDyqvmc6P/Ghyi1f1qNQolVTi6nE32BBv/jLaV6lBNsUowHXWlPg1gKEVY7ru2LakKkmBIJ2oIew4njRWL4MizYBGdAc9c5K4f/ZpByGqP/0z5yqnYDcg5+le6s1BDsqfZ93AvsvuYhMpCiifd6DVHmDJIhi3JdOFhe5RaWo36Qeeo/t8O2ROKz0o+6KQJ/YQnUfWJ2NtJCijqp8rcuLm47Oxldc+9W7Dd60l0ZR01JtQjElSskTFY/5WPsPH3OTmoA0pxzDKtLQ9NNKzsZww4xY2cchOH950VyZHs8S1ydWNhvDFO6rJXrScpOx5ta3U4wkKiXkaXW8E/AjmIk4jFJCkv/3xPg7a6lfYVNr+hBc/PLWaLfurfSgOaLUqse2Uv3KeTG5r3IVkeTukwpGXnv6xuXAs+IC3We7bWR87l+tf7Xov+svimq7zr502k6jPE1twHGT4a4IdQ8TVMe4BoeEl3szIMTDIwKROUp7X45DmuG/pW04NcDkGPVYFu0FlNGV46FQKWlM2Jes=
+  skip_cleanup: true
+  file_glob: true
+  file: "*.zip"
+  on:
+    repo: MatthD/gehost-gestion
+    tags: true
