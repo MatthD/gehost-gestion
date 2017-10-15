@@ -43,5 +43,3 @@ deploy:
     file: '*.zip'
     on:
       tags: true
-  api-key:
-    secure: 
