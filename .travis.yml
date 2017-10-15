@@ -2,38 +2,46 @@ dist: trusty
 os: linux
 language: node_js
 node_js:
-  - "8"
-cache:
+- '8'
+cache: 
 directories:
-  - "node_modules"
+- node_modules
 before_install:
-  - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
-  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-  - echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
-  - sudo apt-get update
-  - sudo apt-get install --no-install-recommends -y mono-devel ca-certificates-mono wine1.8 gcc-multilib g++-multilib
-script: 
-  - npm install -g bower
-  - npm update -g npm
-  - bower install
-  - npm run package-linux
-  - npm run package-mac
-  - npm run package-windows
+- sudo add-apt-repository ppa:ubuntu-wine/ppa -y
+- sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+- echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
+- sudo apt-get update
+- sudo apt-get install --no-install-recommends -y mono-devel ca-certificates-mono
+  wine1.8 gcc-multilib g++-multilib
+script:
+- npm install -g bower
+- npm update -g npm
+- bower install
+- npm run package-linux
+- npm run package-mac
+- npm run package-windows
 before_deploy:
-  - cd build
-  - bash ../script/zip.sh
-  - export RELEASE_PKG_FILE=$(ls *.zip)
-  - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
+- cd build
+- bash ../script/zip.sh
+- export RELEASE_PKG_FILE=$(ls *.zip)
+- echo "deploying $RELEASE_PKG_FILE to GitHub releases"
 deploy:
+  matrix:
   - provider: releases
+    api_key:
+      secure: NY3LtAByHd+f/2mv/S4QnO1NaVbYNasmpveu5a8NfPY0EXuWmjfeoW//h9Q9J3CDgRl8aHl4uCzy+eWrxCZY4zsP4h9G3YSqk6+Lugv7c7qWZQvxQv6BVp9vO5Kp88XerWRRfplucBdU3mNzhG9dKIqoxaDHI0BGHDLn7xm8XKsOkQpt+T7rZbJ0s8hCtDMwa5qOoQN379Gw1wp6EbAa0+YTqpPJy3nE51xXQq/EyxI3do+UALbXEZM7eErgsjWCPVx5jyQ/7uuRVVnvz2kN5cVG+Kp7bsZrUs2EKE4IQY+XFudLhRrHtUwddtTqoCyjcn/VNvmtcxwdIcGc7su7JI87/t7YfPqZ+fLhcumenq74CV5W1N2Uf8Ooji4hou9C81gwwcTNAP1Us7/Vxax20duB2tkRaTX1IzDVWwux47K/BQ6/DUGXS0X+zaB2nPULx5iseBJvRFG2qCZdCxSpIBIsJU4A8aQzoOye6P6L9bDc79/OfeVVxiGk3QmSbVM8oN2JQafZ+UZROdp6R9H2Z4nAsrWdL4kx3trEzhWQ3jXKhXbclgz1Qc54du1E4sQWDNX3OYK2JUHusg5CD2gwroaAQIlcV97xLiKXFxpo7ix9y0n7Poeide4584udPVFBfd0eRccrx0HdUuDt0YdIIT84jBSyLJ3b6crcTX+SzBk=
     skip_cleanup: true
     file_glob: true
-    file: "*.zip"
+    file: '*.zip'
     on:
       branch: master
   - provider: releases
+    api_key:
+      secure: NY3LtAByHd+f/2mv/S4QnO1NaVbYNasmpveu5a8NfPY0EXuWmjfeoW//h9Q9J3CDgRl8aHl4uCzy+eWrxCZY4zsP4h9G3YSqk6+Lugv7c7qWZQvxQv6BVp9vO5Kp88XerWRRfplucBdU3mNzhG9dKIqoxaDHI0BGHDLn7xm8XKsOkQpt+T7rZbJ0s8hCtDMwa5qOoQN379Gw1wp6EbAa0+YTqpPJy3nE51xXQq/EyxI3do+UALbXEZM7eErgsjWCPVx5jyQ/7uuRVVnvz2kN5cVG+Kp7bsZrUs2EKE4IQY+XFudLhRrHtUwddtTqoCyjcn/VNvmtcxwdIcGc7su7JI87/t7YfPqZ+fLhcumenq74CV5W1N2Uf8Ooji4hou9C81gwwcTNAP1Us7/Vxax20duB2tkRaTX1IzDVWwux47K/BQ6/DUGXS0X+zaB2nPULx5iseBJvRFG2qCZdCxSpIBIsJU4A8aQzoOye6P6L9bDc79/OfeVVxiGk3QmSbVM8oN2JQafZ+UZROdp6R9H2Z4nAsrWdL4kx3trEzhWQ3jXKhXbclgz1Qc54du1E4sQWDNX3OYK2JUHusg5CD2gwroaAQIlcV97xLiKXFxpo7ix9y0n7Poeide4584udPVFBfd0eRccrx0HdUuDt0YdIIT84jBSyLJ3b6crcTX+SzBk=
     skip_cleanup: true
     file_glob: true
-    file: "*.zip"
+    file: '*.zip'
     on:
       tags: true
+  api-key:
+    secure: 
