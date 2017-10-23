@@ -5,8 +5,12 @@ const app = require('express')(),
   server = require('http').createServer(app),
   io = require('socket.io')(server);
 
-io.on('connection', function(){ 
+io.on('connection', function(socket){ 
   console.log('somebody comming');
+  socket.on('test', function(message){ 
+    socket.emit('test');
+    console.log(message);
+  });
 });
 
 server.listen(3000);
